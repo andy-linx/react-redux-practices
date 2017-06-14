@@ -1,0 +1,91 @@
+table.calculator
+{
+    border: none;
+
+    border-radius: 5px;
+    border-collapse: 0px;
+    border-spacing: 0px;
+
+    border: 2px solid #CDCDCD;
+    background-color: #EFF6FF;
+
+    padding: 8px;
+}
+
+input[type="text"].calculator
+{
+    font-family: "Comic Sans MS";
+    font-weight: bold;
+    font-size: 11pt;
+
+    text-align: right;
+
+    height: 20px;
+    width: 160px;
+
+    border: 0px;
+    border-radius: 3px;
+
+    border-top: 2px solid #89909B;
+    border-left: 2px solid #89909B;
+
+    border-right: 2px inset;
+    border-bottom: 2px inset;
+
+    padding-right: 5px;
+    margin-bottom: 8px;
+}
+
+input[type="text"][disabled]
+{
+    background-color: #F7F9FC;
+}
+
+/* Begin of calculator-button ======================================================================================================================*/
+.calculator-button
+{
+    display: flex;
+    cursor: pointer;
+
+    justify-content: center;
+    flex-direction: column;
+
+    text-align: center;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    font-weight: bold;
+
+    color: #FFF;
+    background-color: #8C8C8C;
+
+    width: 35px;
+    height: 25px;
+
+    padding-top: 5px;
+    margin-right: 5px;
+
+    border-bottom: 3px solid #000;
+    border-right: 3px solid #000;
+    border-radius: 5px;
+}
+
+.calculator-button:hover
+{
+    background-color: #B9C5D3;
+}
+
+.calculator-button:focus
+{
+    background-color: #15356F;
+}
+/* End of calculator-button ========================================================================================================================*/
+
+.calculator-button-list
+{
+    display: inline-flex;
+    margin-top: 3px;
+}
+
+.xC2 { width: 76px; }
+.xR2 { height: 63px; }
