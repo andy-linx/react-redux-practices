@@ -17,16 +17,29 @@ module.exports =
         "webpack/hot/only-dev-server"
     ],
 
+    devtool: process.env.VARS ? JSON.parse(process.env.VARS)["SMAP"] || false : false,
+
     output:
     {
-        path        : path.join(__dirname, "output/bundles"),
-        publicPath  : "/bundles",
-        filename    : "app.js"
+        path                : path.join(__dirname, "output/bundles"),
+        publicPath          : "/bundles",
+        filename            : "app.js",
+        sourceMapFilename   : "[file].map"
     },
 
     plugins:
     [
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+
+        new webpack.DefinePlugin
+        (
+            {
+                "process.env":
+                {
+                    "NODE_ENV": JSON.stringify("development")
+                }
+            }
+        )
     ],
 
     module:
@@ -34,21 +47,8 @@ module.exports =
         rules:
         [
             {
-                // { and: [Condition] }     : All Conditions must match.
-                // { or: [Condition] }      : Any Condition must match.
-                // { not: [Condition] }     : All Conditions must NOT match.
-
-                // { include: Condition }   : The Condition must match.
-                // The convention is to provide a string or array of strings here, but it"s not enforced.
-
-                // { test: Condition } The Condition must match.
-                // The convention is to provide a RegExp or array of RegExps here, but it"s not enforced.
                 test: /\.js$/,
-
-                // { exclude: Condition }   : The Condition must NOT match.
-                // The convention is to provide a string or array of strings here, but it"s not enforced.
                 exclude: [/node_modules/],
-
                 loader: ["babel-loader"]
             },
 

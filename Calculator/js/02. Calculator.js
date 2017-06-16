@@ -23,7 +23,10 @@ class Calculator extends Component
 
     update = (input) =>
     {
-        let { formula = [], result = 0 } = this.state;
+        let { formula, result = 0 } = this.state;
+
+        // To make a new instance from reference type object.
+        formula = formula.slice();
 
         const evaluation = () =>
         {
@@ -59,7 +62,11 @@ class Calculator extends Component
             result = current ? formula[last] : result;
         }
 
-        this.setState({ formula: formula, result: +result });
+        // { formula : formula } ==> { formula }
+        //
+        // No need to have key to assignment, if the key is same as variable name.
+        // It seems like "Destructuring Assignment" syntax.
+        this.setState({ formula, result: +result });
     }
 
     render()

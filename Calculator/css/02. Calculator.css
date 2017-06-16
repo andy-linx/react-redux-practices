@@ -1,9 +1,10 @@
 table.calculator
 {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    /* Let Buttons can't be selected */
+    /* Chrome & Safari  */  -webkit-user-select: none;
+    /* Firefox          */  -moz-user-select: none;
+    /* IE 10+           */  -ms-user-select: none;
+    /* Likely future    */  user-select: none;
 
     border: none;
 
