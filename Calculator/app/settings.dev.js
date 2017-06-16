@@ -1,7 +1,7 @@
 const settings =
 {
     host    : "localhost",
-    port    : 7777
+    port    : 7788
 };
 
 module.exports = settings;
