@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "dev": "set NODE_ENV=development && babel-node devServer.js",
-    "smap": "cross-env VARS={\\\"SMAP\\\":\\\"source-map\\\",\\\"ENV\\\":\\\"DEV\\\"} yarn dev"
+    "smap": "cross-env VARS={\\\"SMAP\\\":\\\"source-map\\\"} yarn dev"
   },
   "repository": {
     "type": "git",
