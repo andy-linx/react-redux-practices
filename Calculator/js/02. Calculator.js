@@ -201,3 +201,9 @@ const GenerateButtonNumericList = (buttons, fn_update) =>
 
     return <div className="calculator-button-list">{components}</div>;
 };
+
+GenerateButtonNumericList.PropTypes =
+{
+    buttons: PropTypes.arrayOf(PropTypes.number).isRequired,
+    fn_update: PropTypes.func.isRequired
+};
