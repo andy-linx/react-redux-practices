@@ -1,2 +1,2 @@
-import Entrance from "./02. Calculator"
+import Entrance from "./03. Histories"
 module.exports = Entrance;

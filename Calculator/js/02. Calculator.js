@@ -21,46 +21,61 @@ class Calculator extends Component
         /x(C2|R2)/g.test(scalable) ? scalable : ""
     );
 
-    update = (input) =>
+    update = ({ text = "", record = "" }) =>
     {
+        const evaluation = () =>
+        {
+            try
+            {
+                result = eval(formula.join("")) || 0;
+
+                typeof this.props.recording === "function" &&
+                this.props.recording(formula);
+            }
+            catch (ex) { result = 0; }
+            finally { formula = [result]; }
+        },
+
+        calculation = () =>
+        {
+            if (isNaN(+text))
+            {
+                switch (text)
+                {
+                    case "C":
+                        formula = [0], result = 0;
+                        break;
+
+                    case "+":
+                    case "-":
+                        evaluation();
+                        formula.push(...[text, 0]) - 1;
+                        break;
+
+                    case "=":
+                        evaluation();
+                        break;
+                }
+            }
+            else
+            {
+                let last = formula.length - 1, current = formula[last];
+
+                formula[last] = +(current += text);
+                result = current ? formula[last] : result;
+            }
+        },
+
+        rewritten = () =>
+        {
+            console.log(record);
+        };
+
         let { formula, result = 0 } = this.state;
 
         // To make a new instance from reference type object.
         formula = formula.slice();
-
-        const evaluation = () =>
-        {
-            try { result = eval(formula.join("")) || 0; }
-            catch (ex) { result = 0; }
-            finally { formula = [result]; }
-        };
-
-        if (isNaN(+input))
-        {
-            switch (input)
-            {
-                case "C":
-                    formula = [0], result = 0;
-                    break;
-
-                case "+":
-                case "-":
-                    evaluation();
-                    formula.push(...[input, 0]) - 1;
-                    break;
-
-                case "=":
-                    evaluation();
-                    break;
-            }
-        }
-        else
-        {
-            let last = formula.length - 1, current = formula[last];
-
-            formula[last] = +(current += input);
-            result = current ? formula[last] : result;
-        }
+        record ? rewritten() : calculation();
 
         // { formula : formula } ==> { formula }
         //
@@ -81,7 +96,7 @@ class Calculator extends Component
                     </tr>
                     <tr>
                         <td colSpan="2">
-                            { GenerateButtonNumericList([1, 2, 3], this.update) }
+                            <GenerateButtonNumericList buttons={[7, 8, 9]} update={this.update} />
                         </td>
                         <td>
                             <div className="calculator-button-list">
@@ -91,7 +106,7 @@ class Calculator extends Component
                     </tr>
                     <tr>
                         <td colSpan="2">
-                            { GenerateButtonNumericList([4, 5, 6], this.update) }
+                            <GenerateButtonNumericList buttons={[4, 5, 6]} update={this.update} />
                         </td>
                         <td rowSpan="2">
                             <div className="calculator-button-list">
@@ -101,7 +116,7 @@ class Calculator extends Component
                     </tr>
                     <tr>
                         <td colSpan="2">
-                            { GenerateButtonNumericList([7, 8, 9], this.update) }
+                            <GenerateButtonNumericList buttons={[1, 2, 3]} update={this.update} />
                         </td>
                     </tr>
                     <tr>
@@ -127,7 +142,10 @@ class Calculator extends Component
     }
 }
 
-module.exports = Calculator;
+Calculator.propTypes =
+{
+    recording: PropTypes.func
+};
 
 // Sub-Components
 class ButtonNumeric extends Component
@@ -143,7 +161,7 @@ class ButtonNumeric extends Component
         const dom = e.target || e.which;
 
         dom.blur();
-        this.props.update(dom.innerText);
+        this.props.update({ text: dom.innerText });
     }
 
     render()
@@ -157,6 +175,13 @@ class ButtonNumeric extends Component
         );
     }
 }
+
+ButtonNumeric.propTypes =
+{
+    text: PropTypes.string.isRequired,
+    update: PropTypes.func.isRequired,
+    scalable: PropTypes.string
+};
 
 class ButtonOperator extends ButtonNumeric
 {
@@ -183,8 +208,8 @@ class ButtonOperator extends ButtonNumeric
     }
 }
 
-// Static Functions
-const GenerateButtonNumericList = (buttons, fn_update) =>
+// Static Component
+const GenerateButtonNumericList = ({ buttons, update }) =>
 {
     let components = [];
 
@@ -194,7 +219,7 @@ const GenerateButtonNumericList = (buttons, fn_update) =>
         (
             (element, index) =>
             {
-                return <ButtonNumeric key={index} text={element} update={fn_update} />;
+                return <ButtonNumeric key={index} text={"".concat(element)} update={update} />;
             }
         )
     );
@@ -202,8 +227,10 @@ const GenerateButtonNumericList = (buttons, fn_update) =>
     return <div className="calculator-button-list">{components}</div>;
 };
 
-GenerateButtonNumericList.PropTypes =
+GenerateButtonNumericList.propTypes =
 {
     buttons: PropTypes.arrayOf(PropTypes.number).isRequired,
-    fn_update: PropTypes.func.isRequired
+    update: PropTypes.func.isRequired
 };
+
+export default Calculator;
