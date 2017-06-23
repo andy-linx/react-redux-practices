@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import "../css/02. Calculator.css";
+import "../css/02. Calculator";
 
 class Calculator extends Component
 {

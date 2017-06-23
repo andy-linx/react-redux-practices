@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="theme-color" content="#FFFFFF" />
 
-    <title>The Practice for React-Redux</title>
+    <title><%= htmlWebpackPlugin.options.data.title %></title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
@@ -14,6 +14,6 @@
 </head>
 <body>
     <div id="app-contr"></div>
-    <script src="./bundle/app.js"></script>
+    <script src="./<%= htmlWebpackPlugin.options.data.bundle %>/app.js"></script>
 </body>
 </html>

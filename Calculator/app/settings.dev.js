@@ -1,7 +1,8 @@
 const settings =
 {
     host    : "localhost",
-    port    : 7788
+    port    : 7777,
+    bundle  : "bundle"
 };
 
 module.exports = settings;

@@ -1,3 +1,5 @@
 node_modules
+built
 yarn.lock
 app/.guidance
+output/index.html
