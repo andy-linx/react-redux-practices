@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "dev": "set NODE_ENV=development && babel-node app/server.dev.js",
-    "full": "set NODE_ENV=fullbuild && webpack --config .config/webpack.full.js && yarn dev",
+    "full": "set NODE_ENV=fullbuild && webpack --config .config/webpack.full.js && rmdir /q /s built && yarn dev",
     "smap": "cross-env VARS={\\\"SMAP\\\":\\\"source-map\\\",\\\"AUTHOR\\\":\\\"Audi\\\"} yarn dev"
   },
   "repository": {
