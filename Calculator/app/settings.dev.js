@@ -1,6 +1,6 @@
 module.exports =
 {
     host    : "localhost",
-    port    : 7777,
+    port    : 7788,
     bundle  : "assets"
 };
