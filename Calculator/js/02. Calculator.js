@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 
 import "../css/02. Calculator";
 
-class Calculator extends Component
+class Calculator extends PureComponent
 {
     constructor(props)
     {
@@ -16,21 +16,24 @@ class Calculator extends Component
         };
     }
 
+    static propTypes =
+    {
+        recording: PropTypes.func
+    }
+
     static scale = (scalable) =>
     (
         /x(C2|R2)/g.test(scalable) ? scalable : ""
     );
 
-    update = ({ text = "", record = "" }) =>
+    update = ({ text = "", value = undefined }) =>
     {
         const evaluation = () =>
         {
             try
             {
                 result = eval(formula.join("")) || 0;
-
-                typeof this.props.recording === "function" &&
-                this.props.recording(formula);
+                formula.length > 1 && recording(formula);
             }
             catch (ex) { result = 0; }
             finally { formula = [result]; }
@@ -44,6 +47,7 @@ class Calculator extends Component
                 {
                     case "C":
                         formula = [0], result = 0;
+                        recording(text);
                         break;
 
                     case "+":
@@ -68,14 +72,20 @@ class Calculator extends Component
 
         rewritten = () =>
         {
-            console.log(record);
+            formula = [+value], result = value;
+        },
+
+        recording = (expression) =>
+        {
+            typeof this.props.recording === "function" &&
+            this.props.recording(expression);
         };
 
         let { formula, result = 0 } = this.state;
 
         // To make a new instance from reference type object.
         formula = formula.slice();
-        record ? rewritten() : calculation();
+        value === undefined ? calculation() : rewritten();
 
         // { formula : formula } ==> { formula }
         //
@@ -142,18 +152,20 @@ class Calculator extends Component
     }
 }
 
-Calculator.propTypes =
-{
-    recording: PropTypes.func
-};
-
 // Sub-Components
-class ButtonNumeric extends Component
+class ButtonNumeric extends PureComponent
 {
     constructor(props)
     {
         super(props);
         this.tab_index = +this.props.text;
+    }
+
+    static propTypes =
+    {
+        text: PropTypes.string.isRequired,
+        update: PropTypes.func.isRequired,
+        scalable: PropTypes.string
     }
 
     hnr_click = (e) =>
@@ -175,13 +187,6 @@ class ButtonNumeric extends Component
         );
     }
 }
-
-ButtonNumeric.propTypes =
-{
-    text: PropTypes.string.isRequired,
-    update: PropTypes.func.isRequired,
-    scalable: PropTypes.string
-};
 
 class ButtonOperator extends ButtonNumeric
 {
@@ -208,7 +213,7 @@ class ButtonOperator extends ButtonNumeric
     }
 }
 
-// Static Component
+// Stateless Functional Component
 const GenerateButtonNumericList = ({ buttons, update }) =>
 {
     let components = [];

@@ -49,6 +49,15 @@ module.exports =
             {
                 test: /\.css$/,
                 loader: "style-loader!css-loader"
+            },
+
+            {
+                test: /\.ico$/,
+                loader: "url-loader",
+                query:
+                {
+                    mimetype: "image/x-icon"
+                }
             }
         ]
     }

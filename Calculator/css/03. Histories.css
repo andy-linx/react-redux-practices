@@ -1,0 +1,35 @@
+ul
+{
+    cursor: pointer;
+
+    font-family: "Verdana";
+    font-size: 11pt;
+
+    margin-top: 5px;
+    margin-left: 20px;
+
+    padding: 0px;
+}
+
+ul li
+{
+    list-style: none;
+    background: url("/icons/icon-remove.ico") no-repeat 0px 2px transparent;
+
+    width: 200px;
+
+    padding: 0px 0px 0px 20px;
+    margin-bottom: 6px;
+    text-indent: 0.4em;
+}
+
+ul li:hover
+{
+    color: #2F289B;
+    font-weight: bold;
+}
+
+.main-container
+{
+    display: inline-flex;
+}

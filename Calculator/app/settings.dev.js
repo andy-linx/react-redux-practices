@@ -1,8 +1,6 @@
-const settings =
+module.exports =
 {
     host    : "localhost",
-    port    : 7788,
+    port    : 7777,
     bundle  : "assets"
 };
-
-module.exports = settings;
